@@ -47,3 +47,4 @@ noBtn.addEventListener("touchstart", (e) => {
 yesBtn.addEventListener("click", () => {
     window.location.href = "yes_page.html";
 });
+// gokul
