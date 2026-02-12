@@ -1,6 +1,16 @@
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const container = document.querySelector(".buttons");
+function distance2D(x1, y1, x2, y2) {
+    if(x1==null || y1==null)
+    {
+        x1=0;
+        y1=0;
+    }
+    return Math.sqrt(
+        Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)
+    );
+}
 function moveNoButton() {
     const maxX = container.clientWidth - noBtn.offsetWidth;
     const maxY = container.clientHeight - noBtn.offsetHeight;
@@ -10,10 +20,11 @@ function moveNoButton() {
 
     let x, y;
     let isOverlapping = true;
-    const positions = [0.2, 0.4, 0.6, 0.8, 1];
-    while (isOverlapping) {
-        x = positions[Math.floor(Math.random() * positions.length)] * maxX;
-        y = positions[Math.floor(Math.random() * positions.length)] * maxY;
+    let prevX=null,prevY=null;
+    let prevCheck=true;
+    while (isOverlapping || prevCheck) {
+        x = Math.random()* maxX;
+        y = Math.random()* maxY;
 
         const noRect = {
             left: containerRect.left + x,
@@ -28,10 +39,13 @@ function moveNoButton() {
             noRect.bottom < yesRect.top ||
             noRect.top > yesRect.bottom
         );
+        prevCheck=distance2D(prevX,prevY,x,y)<noBtn.offsetWidth+noBtn.offsetHeight;
     }
 
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
+    prevX=x;
+    prevY=y;
 }
 
 /* Desktop */
